@@ -25,8 +25,6 @@ func readReplayAndOutputAsCsv(filepath string, w *csv.Writer) {
 
 
 
-	err = w.Write(metadata.GetReplayMetadataHeaders())
-	check(err)
 
 	err = w.Write(data.ToStringSlice())
 	check(err)
@@ -36,6 +34,9 @@ func readReplayAndOutputAsCsv(filepath string, w *csv.Writer) {
 func main() {
 
 	w := csv.NewWriter(os.Stdout)
+
+	err := w.Write(metadata.GetReplayMetadataHeaders())
+	check(err)
 
 	replays_dir := "/home/hanbinsock/programman/ggacr_replays"
 	files, err := ioutil.ReadDir(replays_dir)
