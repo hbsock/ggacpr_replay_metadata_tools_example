@@ -1,10 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"hbsock/ggacpr_replay_metadata_tools/pkg"
 	"encoding/csv"
+	"io/ioutil"
+	"path/filepath"
 )
 
 func check(e error) {
@@ -36,9 +37,25 @@ func main() {
 
 	w := csv.NewWriter(os.Stdout)
 
+	replays_dir := "/home/hanbinsock/programman/ggacr_replays"
+	files, err := ioutil.ReadDir(replays_dir)
+	check(err)
+
+	for _, file := range files {
+		if !file.IsDir() {
+			replay_file_path := filepath.Join( replays_dir, file.Name() )
+			readReplayAndOutputAsCsv(
+				replay_file_path,
+				w,
+			)
+		}
+	}
+
+	/*
 	readReplayAndOutputAsCsv("/home/hanbinsock/programman/test_replay_20220127_1829_Klantsmurfen_RO_vs_Nibnab_JA.ggr",
 		w,
 	)
+	*/
 
 	w.Flush()
 	check(w.Error())
