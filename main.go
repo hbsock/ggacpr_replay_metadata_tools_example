@@ -13,10 +13,9 @@ func check(e error) {
 	}
 }
 
-func main() {
-	fmt.Println("Hi world")
+func readReplayAndOutputAsCsv(filepath string, w *csv.Writer) {
 
-	file, err := os.Open("/home/hanbinsock/programman/test_replay_20220127_1829_Klantsmurfen_RO_vs_Nibnab_JA.ggr")
+	file, err := os.Open(filepath)
 	check(err)
 	defer file.Close()
 
@@ -24,13 +23,22 @@ func main() {
 	check(err)
 
 
-	w := csv.NewWriter(os.Stdout)
 
 	err = w.Write(metadata.GetReplayMetadataHeaders())
 	check(err)
 
 	err = w.Write(data.ToStringSlice())
 	check(err)
+
+}
+
+func main() {
+
+	w := csv.NewWriter(os.Stdout)
+
+	readReplayAndOutputAsCsv("/home/hanbinsock/programman/test_replay_20220127_1829_Klantsmurfen_RO_vs_Nibnab_JA.ggr",
+		w,
+	)
 
 	w.Flush()
 	check(w.Error())
