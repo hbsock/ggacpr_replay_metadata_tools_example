@@ -2,7 +2,7 @@ package main
 
 import (
 	"os"
-	"hbsock/ggacpr_replay_metadata_tools/pkg"
+	"github.com/hbsock/ggacpr_replay_metadata_tools/pkg"
 	"encoding/csv"
 	"io/ioutil"
 	"path/filepath"
